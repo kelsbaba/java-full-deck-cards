@@ -7,9 +7,12 @@ public class Main {
         Deck deck = new Deck();
         deck.shuffle();
 
+        Player player = new Player("kelly");
+
         for (int i = 0; i < 5; i++){
-            System.out.println(deck.cardDealt());
+            player.receiveCard(deck.cardDealt());
         }
+        player.showHand();
 
     }
 }
