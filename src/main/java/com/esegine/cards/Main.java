@@ -4,15 +4,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Deck deck = new Deck();
-        deck.shuffle();
+        Game game = new Game();
 
-        Player player = new Player("kelly");
+        game.addPlayer(new Player("Kelly"));
+        game.addPlayer(new Player("John"));
+        game.addPlayer(new Player("Mary"));
+        game.addPlayer(new Player("David"));
 
-        for (int i = 0; i < 5; i++){
-            player.receiveCard(deck.cardDealt());
-        }
-        player.showHand();
-
+        game.start(5);
     }
 }

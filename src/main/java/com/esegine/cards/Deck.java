@@ -20,12 +20,15 @@ public class Deck {
             }
         }
     }
+    public int getRemainingCards(){
+        return cards.size() ;
+    }
 
     public int size() {
         return cards.size();
     }
 
-    public Card cardDealt() {
+    public Card dealCard() {
          return cards.remove(0);
     }
 
