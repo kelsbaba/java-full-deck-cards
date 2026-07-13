@@ -10,7 +10,8 @@ public class Main {
         game.addPlayer(new Player("John"));
         game.addPlayer(new Player("Mary"));
         game.addPlayer(new Player("David"));
+        game.addPlayer(new Player("Louis"));
 
-        game.start(5);
+        game.start(4);
     }
 }
