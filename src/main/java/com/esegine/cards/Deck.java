@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Deck {
 
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Deck() {
         cards = new ArrayList<>(52);
@@ -22,10 +22,6 @@ public class Deck {
     }
     public int getRemainingCards(){
         return cards.size() ;
-    }
-
-    public int size() {
-        return cards.size();
     }
 
     public Card dealCard() {

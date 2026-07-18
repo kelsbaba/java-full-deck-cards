@@ -17,17 +17,7 @@ public class ConsoleUI {
 
             boolean running = true;
             do {
-                System.out.println("============================");
-                System.out.println("    JAVA FULL DECK CARDS"     );
-                System.out.println("============================");
-
-                System.out.println("1. Add Player");
-                System.out.println("2. Shuffle Deck");
-                System.out.println("3. Deal Cards");
-                System.out.println("4. Show Players' Hands");
-                System.out.println("5. Show Remaining Cards");
-                System.out.println("6. New Game");
-                System.out.println("7. Exit");
+                displayMenu();
             try {
                 System.out.print("Enter your choice: ");
                 int choice = scanner.nextInt();
@@ -35,48 +25,15 @@ public class ConsoleUI {
 
                 switch (choice) {
                     case 1:
-                        try{
-                            System.out.print("Enter Player's Name:");
-                            String playerName = scanner.nextLine();
-                            game.addPlayer(new Player(playerName));
-                            System.out.println("Player " + playerName + " added successfully");
-                        }
-                        catch (IllegalStateException e) {
-                            System.out.println(e.getMessage());
-                        }
+                        handleAddPlayer();
                         break;
 
                     case 2:
-                        try {
-                            game.shuffleDeck();
-                            System.out.println("Deck has been shuffled!");
-                        }
-                        catch (IllegalStateException e) {
-                            System.out.println(e.getMessage());
-                        }
+                        handleShuffleDeck();
                         break;
 
                     case 3:
-                        while (true) {
-                            try {
-                                System.out.print("Enter number of cards per player:");
-                                int cardsPerPerson = scanner.nextInt();
-                                scanner.nextLine();
-                                game.dealCards(cardsPerPerson);
-                                    break;
-                                }
-                                catch (IllegalStateException e) {
-                                    System.out.println(e.getMessage());
-                                    break;
-                                }
-                                catch (InputMismatchException e) {
-                                System.out.println("Invalid input, please enter a number");
-                                scanner.nextLine();
-                                }
-                            catch (IllegalArgumentException e){
-                                System.out.println(e.getMessage());
-                            }
-                        }
+                        handleDealCards();
                         break;
 
                     case 4:
@@ -84,14 +41,11 @@ public class ConsoleUI {
                         break;
 
                     case 5:
-                        int numberOfCardsRemaining = game.getRemainingCards();
-                        System.out.println(numberOfCardsRemaining + " card" + ((numberOfCardsRemaining > 1) ? "s" : ""));
+                        showRemainingCards();
                         break;
 
                     case 6: {
-                        game.resetGame();
-                        System.out.println("Starting a new game...");
-                        System.out.println("Game reset successfully.");
+                        handleResetGame();
                         break;
                     }
 
@@ -102,17 +56,97 @@ public class ConsoleUI {
 
                     }
                     default:
-                        System.out.println("Invalid choice, please select a number between 1 - 6.");
+                        System.out.println("Invalid choice, please select a number between 1 - 7.");
                 }
             }
                 catch(InputMismatchException e){
-                    System.out.println("Invalid input , please enter a number");
-                    scanner.next();
+                    System.out.println("Invalid input, please enter a number.");
+                    scanner.nextLine();
                 }
 
             }
             while (running);
         }
+
+
+    private void displayMenu() {
+        System.out.println("============================");
+        System.out.println("    JAVA FULL DECK CARDS");
+        System.out.println("============================");
+
+        System.out.println("1. Add Player");
+        System.out.println("2. Shuffle Deck");
+        System.out.println("3. Deal Cards");
+        System.out.println("4. Show Players' Hands");
+        System.out.println("5. Show Remaining Cards");
+        System.out.println("6. New Game");
+        System.out.println("7. Exit");
+    }
+
+    private void handleAddPlayer() {
+        try {
+            System.out.print("Enter Player's Name: ");
+            String playerName = scanner.nextLine();
+
+            game.addPlayer(new Player(playerName));
+            System.out.println("Player '" + playerName + "' added successfully.");
+
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void handleShuffleDeck() {
+        try {
+            game.shuffleDeck();
+            System.out.println("Deck has been shuffled!");
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void handleDealCards() {
+
+        while (true) {
+            try {
+                System.out.print("Enter number of cards per player: ");
+                int cardsPerPerson = scanner.nextInt();
+                scanner.nextLine();
+
+                game.dealCards(cardsPerPerson);
+                System.out.println("Cards dealt successfully.");
+                break;
+
+            } catch (IllegalStateException e) {
+                System.out.println(e.getMessage());
+                break;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input, please enter a number.");
+                scanner.nextLine();
+
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private void showRemainingCards() {
+        int numberOfCardsRemaining = game.getRemainingCards();
+
+        System.out.println(
+                numberOfCardsRemaining + " card" +
+                        (numberOfCardsRemaining != 1 ? "s" : "")
+        );
+    }
+
+    private void handleResetGame() {
+        game.resetGame();
+        System.out.println("Game has been reset.");
+    }
 
 }
 

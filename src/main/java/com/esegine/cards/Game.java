@@ -24,7 +24,7 @@ public class Game {
         }
         for (Player activePlayer : players){
             if (activePlayer.getPlayerName().equalsIgnoreCase(player.getPlayerName())){
-                throw new IllegalArgumentException("Player with this name " + player.getPlayerName() + " is already in the game!! ");
+                throw new IllegalArgumentException("Player '" + player.getPlayerName() + "' already exist. ");
             }
 
         }
