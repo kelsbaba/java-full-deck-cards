@@ -17,6 +17,12 @@ public class Game {
         if (player == null) {
             throw new IllegalArgumentException("Player cannot be null.");
         }
+        for (Player activePlayer : players){
+            if (activePlayer.getPlayerName().equalsIgnoreCase(player.getPlayerName())){
+                throw new IllegalArgumentException("Player with this name " + player.getPlayerName() + " is already in the game!! ");
+            }
+
+        }
 
         players.add(player);
     }

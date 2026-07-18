@@ -9,8 +9,19 @@ public class Player {
     private List<Card> hand;
 
     public Player(String playerName){
+        if (playerName == null){
+            throw new IllegalArgumentException("Player name cannot be null");
+        }
+        playerName = playerName.trim();
+        if (playerName.isEmpty()){
+            throw new IllegalArgumentException("Player name cannot be empty");
+        }
         this.playerName = playerName;
         this.hand = new ArrayList<>();
+    }
+
+    public String getPlayerName(){
+        return playerName;
     }
 
     public void receiveCard(Card card){

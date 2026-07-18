@@ -1,5 +1,6 @@
 package com.esegine.cards;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ConsoleUI {
@@ -26,11 +27,12 @@ public class ConsoleUI {
                 System.out.println("4. Show Players' Hands");
                 System.out.println("5. Show Remaining Cards");
                 System.out.println("6. Exit");
-
+            try {
                 System.out.print("Enter your choice: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
-                switch (choice){
+
+                switch (choice) {
                     case 1:
                         System.out.print("Enter Player's Name:");
                         String playerName = scanner.nextLine();
@@ -44,10 +46,26 @@ public class ConsoleUI {
                         break;
 
                     case 3:
-                        System.out.println("Enter number of cards per player:");
-                        int cardsPerPerson = scanner.nextInt();
-                        scanner.nextLine();
-                        game.dealCards(cardsPerPerson);
+                        while (true) {
+                            try {
+                                System.out.print("Enter number of cards per player:");
+                                int cardsPerPerson = scanner.nextInt();
+                                scanner.nextLine();
+                                game.dealCards(cardsPerPerson);
+                                    break;
+                                }
+                                catch (IllegalStateException e) {
+                                    System.out.println(e.getMessage());
+                                    break;
+                                }
+                                catch (InputMismatchException e) {
+                                System.out.println("Invalid input, please enter a number");
+                                scanner.nextLine();
+                                }
+                            catch (IllegalArgumentException e){
+                                System.out.println(e.getMessage());
+                            }
+                        }
                         break;
 
                     case 4:
@@ -55,22 +73,27 @@ public class ConsoleUI {
                         break;
 
                     case 5:
-                       int numberOfCardsRemaining = game.getRemainingCards();
-                        System.out.println(numberOfCardsRemaining + " card" +((numberOfCardsRemaining > 1)? "s" : ""));
+                        int numberOfCardsRemaining = game.getRemainingCards();
+                        System.out.println(numberOfCardsRemaining + " card" + ((numberOfCardsRemaining > 1) ? "s" : ""));
                         break;
 
-                    case 6:{
+                    case 6: {
                         System.out.println("Goodbye and thanks for playing!");
-                        running = false ;
+                        running = false;
                         break;
 
                     }
                     default:
                         System.out.println("Invalid choice, please select a number between 1 - 6.");
                 }
+            }
+                catch(InputMismatchException e){
+                    System.out.println("Invalid input , please enter a number");
+                    scanner.next();
+                }
 
             }
-            while (running == true);
+            while (running);
         }
 
 }
