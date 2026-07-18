@@ -26,7 +26,8 @@ public class ConsoleUI {
                 System.out.println("3. Deal Cards");
                 System.out.println("4. Show Players' Hands");
                 System.out.println("5. Show Remaining Cards");
-                System.out.println("6. Exit");
+                System.out.println("6. New Game");
+                System.out.println("7. Exit");
             try {
                 System.out.print("Enter your choice: ");
                 int choice = scanner.nextInt();
@@ -34,15 +35,25 @@ public class ConsoleUI {
 
                 switch (choice) {
                     case 1:
-                        System.out.print("Enter Player's Name:");
-                        String playerName = scanner.nextLine();
-                        game.addPlayer(new Player(playerName));
-                        System.out.println("Player " + playerName + " added successfully");
+                        try{
+                            System.out.print("Enter Player's Name:");
+                            String playerName = scanner.nextLine();
+                            game.addPlayer(new Player(playerName));
+                            System.out.println("Player " + playerName + " added successfully");
+                        }
+                        catch (IllegalStateException e) {
+                            System.out.println(e.getMessage());
+                        }
                         break;
 
                     case 2:
-                        game.shuffleDeck();
-                        System.out.println("Deck has been shuffled!");
+                        try {
+                            game.shuffleDeck();
+                            System.out.println("Deck has been shuffled!");
+                        }
+                        catch (IllegalStateException e) {
+                            System.out.println(e.getMessage());
+                        }
                         break;
 
                     case 3:
@@ -78,6 +89,13 @@ public class ConsoleUI {
                         break;
 
                     case 6: {
+                        game.resetGame();
+                        System.out.println("Starting a new game...");
+                        System.out.println("Game reset successfully.");
+                        break;
+                    }
+
+                    case 7: {
                         System.out.println("Goodbye and thanks for playing!");
                         running = false;
                         break;

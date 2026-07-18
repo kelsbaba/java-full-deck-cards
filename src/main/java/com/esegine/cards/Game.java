@@ -4,18 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    private final Deck deck;
+    private  Deck deck;
     private final List<Player> players;
+    private boolean cardsDealt;
 
 
     public Game() {
         this.deck = new Deck();
         this.players = new ArrayList<>();
+        this.cardsDealt = false ;
     }
 
     public void addPlayer(Player player) {
         if (player == null) {
             throw new IllegalArgumentException("Player cannot be null.");
+        }
+        if (cardsDealt) {
+            throw new IllegalStateException("Cannot add players after cards have been dealt.");
         }
         for (Player activePlayer : players){
             if (activePlayer.getPlayerName().equalsIgnoreCase(player.getPlayerName())){
@@ -28,6 +33,9 @@ public class Game {
     }
 
     public void dealCards(int cardsPerPerson) {
+        if (cardsDealt) {
+            throw new IllegalStateException("Cards have already been dealt. Please start a new game.");
+        }
         if (players.isEmpty()) {
             throw new IllegalStateException("There has to be at least one player");
         }
@@ -45,7 +53,7 @@ public class Game {
 
             }
         }
-
+        cardsDealt = true;
 
     }
     public int getRemainingCards() {
@@ -53,6 +61,11 @@ public class Game {
     }
 
     public void shuffleDeck() {
+        if (cardsDealt) {
+            throw new IllegalStateException(
+                    "Cannot shuffle the deck after cards have been dealt. Please start a new game."
+            );
+        }
         deck.shuffle();
     }
 
@@ -60,6 +73,12 @@ public class Game {
         for (Player player : players) {
             player.showHand();
         }
+    }
+
+    public void resetGame(){
+        this.deck = new Deck();
+        players.clear();
+        cardsDealt = false;
     }
 
 }

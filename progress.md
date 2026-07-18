@@ -124,3 +124,27 @@ Introduce game state management so the application behaves like a real card game
 * Shuffle the deck automatically for a new game
 * Prevent adding players after cards have been dealt
 * Improve the overall game flow and user experience
+
+## Sprint 7 – Game Reset
+
+### Goal
+
+Implement a complete game reset so the application can start a fresh game without restarting.
+
+### Completed
+
+* Added `resetGame()` to the `Game` class.
+* Reset the deck by creating a new `Deck`.
+* Cleared all players from the game.
+* Reset the `cardsDealt` flag.
+* Added **New Game** to the console menu.
+* Moved **Exit** to menu option **7**.
+* Successfully tested multiple game lifecycles without restarting the application.
+
+## Next Sprint
+
+* Perform a final code review and refactoring.
+* Improve console messages and user experience.
+* Review naming consistency and code organization.
+* Prepare Version 1.0 release.
+
